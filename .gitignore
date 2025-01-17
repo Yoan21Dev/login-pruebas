@@ -1,0 +1,50 @@
+# compiled output
+/dist
+/node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+.env
+
+
+files/*
+!files/categoria1.png
+!files/categoria2.png
+!files/categoria3.png
+!files/categoria4.png
+!files/categoria5.png
+!files/categoria6.png
+!files/categoria7.png
+!files/categoria8.png
+!files/categoria9.png
+!files/categoria10.png

@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model session {
+  id               BigInt    @id @default(autoincrement()) @db.BigInt
+  email            String    @unique @db.VarChar(256)
+  password         String    @db.VarChar(1024)
+  lastAccess       DateTime? @db.Timestamptz(3)
+  timesLoggedIn    Int       @default(0)
+  accountConfirmed Boolean   @default(false) @db.Boolean
+
+  type   session_type @relation(fields: [typeId], references: [id])
+  typeId Int          @db.SmallInt
+
+  status   session_status @relation(fields: [statusId], references: [id])
+  statusId Int            @db.SmallInt
+
+  rol   session_rol @relation(fields: [rolId], references: [id])
+  rolId Int         @db.SmallInt
+
+  user      user?
+  userAdmin user_admin?
+}
+
+model session_type {
+  id   Int    @id @default(autoincrement()) @db.SmallInt
+  name String @db.VarChar(256)
+
+  sessions session[]
+}
+
+model session_status {
+  id   Int    @id @default(autoincrement()) @db.SmallInt
+  name String @db.VarChar(256)
+
+  sessions session[]
+}
+
+model session_rol {
+  id          Int     @id @default(autoincrement()) @db.SmallInt
+  name        String  @db.VarChar(256)
+  description String? @db.VarChar(256)
+
+  sessions session[]
+}
+
+model user {
+  id        BigInt    @id @default(autoincrement()) @db.BigInt
+  name      String?   @db.VarChar(1024)
+  lastName  String?   @db.VarChar(1024)
+  createdAt DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
+  deletedAt DateTime? @db.Timestamptz(3)
+
+  session   session @relation(fields: [sessionId], references: [id])
+  sessionId BigInt  @unique
+}
+
+model user_admin {
+  id        BigInt    @id @default(autoincrement()) @db.BigInt
+  name      String?   @db.VarChar(1024)
+  lastName  String?   @db.VarChar(1024)
+  createdAt DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
+  deletedAt DateTime? @db.Timestamptz(3)
+
+  session   session @relation(fields: [sessionId], references: [id])
+  sessionId BigInt  @unique
+}
